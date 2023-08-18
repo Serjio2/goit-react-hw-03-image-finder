@@ -1,13 +1,16 @@
-import { GlobalStyle } from "./GlobalStyle";
-import { ImageGallery } from "./ImageGallery/ImageGallery";
-import { Searchbar } from "./Searchbar/Searchbar";
+import { Component } from 'react';
+import { GlobalStyle } from './GlobalStyle';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import { Searchbar } from './Searchbar/Searchbar';
 
-export const App = () => {
-  return (
-    <div >
-      <GlobalStyle/>
-      <Searchbar />
-      <ImageGallery />
-    </div>
-  );
-};
+export class App extends Component {
+  render() {
+    return (
+      <div>
+        <GlobalStyle />
+        <Searchbar />
+        <ImageGallery />
+      </div>
+    );
+  }
+}

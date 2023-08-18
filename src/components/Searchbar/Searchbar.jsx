@@ -1,3 +1,5 @@
+// import { StyledSearchbar } from "./Searchbar.styled";
+
 export const Searchbar = () => {
   return (
     <header>
