@@ -37,17 +37,19 @@ export class App extends Component {
   }
 
   handleLoadMore = () => {
-    this.setState(prevState => ({ page: prevState.page + 1 }));
+    this.setState(prevState => ({
+       page: prevState.page + 1,
+     }));
   };
 
   render() {
     return (
-      <div>
+      <>
         <GlobalStyle />
         <Searchbar onSubmit={this.handleChangeQuery} />
         <ImageGallery images={this.state.images} />
         <ButtonLoadMore onClick={this.handleLoadMore} />
-      </div>
+      </>
     );
   }
 }
