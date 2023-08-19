@@ -1,15 +1,19 @@
-// import { StyledSearchbar } from "./Searchbar.styled";
+import { StyledSearchButton, StyledSearchForm, StyledSearchbar, StyledSerchFormInput } from "./Searchbar.styled";
 
-export const Searchbar = () => {
+export const Searchbar = ({onSubmit}) => {
   return (
-    <header>
-      <form>
-        <button type="submit">
+    <StyledSearchbar>
+      <StyledSearchForm onSubmit={event => {
+        event.preventDefault();
+        onSubmit(event.target.elements.query.value);
+        event.target.reset();
+      }}>
+        <StyledSearchButton type="submit">
           <span>Search</span>
-        </button>
+        </StyledSearchButton>
 
-        <input type="text" placeholder="Search images and photos" />
-      </form>
-    </header>
+        <StyledSerchFormInput type="text" name="query" placeholder="Search images and photos" />
+      </StyledSearchForm>
+    </StyledSearchbar>
   );
 };

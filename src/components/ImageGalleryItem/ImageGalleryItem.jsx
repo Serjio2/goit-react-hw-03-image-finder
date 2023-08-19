@@ -1,7 +1,7 @@
-export const ImageGalleryItem = () => {
+export const ImageGalleryItem = ({image}) => {
   return (
-    <li>
-      <img src="" alt="" />
-    </li>
+    <>
+      <img src={image.webformatURL} alt="" />
+    </>
   );
 };

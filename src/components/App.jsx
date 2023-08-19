@@ -20,20 +20,20 @@ export class App extends Component {
     });
   };
 
-  async componentDidMount() {
-    const images = await fetchImages();
-    console.log(images)
-  }
-
-  componentDidUpdate(prevPrpos, prevState) {
+  async componentDidUpdate(prevPrpos, prevState) {
     if (
       prevState.query !== this.state.query ||
-      prevState.page !== this.state.page ||  prevState.page !== 1
+      prevState.page !== this.state.page
     ) {
-      console.log(this.state.query.slice(this.state.query.indexOf('/')+1), this.state.page);
+      const images = await fetchImages(
+        this.state.query.slice(this.state.query.indexOf('/') + 1),
+        this.state.page
+      );
+
+      this.setState({
+        images,
+      });
     }
-
-
   }
 
   handleLoadMore = () => {
@@ -45,7 +45,7 @@ export class App extends Component {
       <div>
         <GlobalStyle />
         <Searchbar onSubmit={this.handleChangeQuery} />
-        <ImageGallery />
+        <ImageGallery images={this.state.images} />
         <ButtonLoadMore onClick={this.handleLoadMore} />
       </div>
     );
