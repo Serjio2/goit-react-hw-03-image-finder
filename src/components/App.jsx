@@ -16,32 +16,41 @@ export class App extends Component {
 
   handleChangeQuery = newQuery => {
     this.setState({
-      query: `${Date.now()}/${newQuery}`,
+      // query: `${Date.now()}/${newQuery}`,
+      query: newQuery,
       images: [],
       page: 1,
     });
   };
 
-  async componentDidUpdate(prevPrpos, prevState) {
+  async componentDidUpdate(prevProps, prevState) {
       try {
       if (
         prevState.query !== this.state.query ||
         prevState.page !== this.state.page 
       ) {
+        // console.log('Change')
+        // console.log(prevState.query, 'Change prevState')
+        // console.log(this.state.query, 'Change state')
+
         this.setState({ loading: true });
-        const images = await fetchImages(
-          this.state.query.slice(this.state.query.indexOf('/') + 1),
+
+        const data = await fetchImages(
+          // this.state.query.slice(this.state.query.indexOf('/') + 1),
+          this.state.query,
           this.state.page
         );
 
         this.setState({
-          images,
+          images: data,
           loading: false,
         });
       }
     } catch (error) {
-      console.log(error);
-    } finally {
+      console.log(error.message);
+    }
+    finally {
+      // () => this.setState({ loading: false });
     }
   }
 
@@ -52,16 +61,17 @@ export class App extends Component {
   };
 
   render() {
+
+    // const {hits} = this.state.images;
+
     return (
       <>  
       <GlobalStyle />
         <Searchbar onSubmit={this.handleChangeQuery} />
-        {this.state.loading ? (
-          <Loader/>
-        ) : (
-          <ImageGallery images={this.state.images} />
-        )}
-
+        {this.state.loading && <Loader/>} 
+        
+         {this.state.images && <ImageGallery images={this.state.images} />} 
+       
         <ButtonLoadMore onClick={this.handleLoadMore} />
       </>
     );
