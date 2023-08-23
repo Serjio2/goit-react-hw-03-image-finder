@@ -1,27 +1,44 @@
-// import { ModalWin } from 'components/Modal/Modal';
-// import { StyledImageGalleryItem } from './ImageGalleryItem.styled';
-// import { Component } from 'react';
+import Modal from 'react-modal';
+import { StyledImageGalleryItem } from './ImageGalleryItem.styled';
+import { Component } from 'react';
 
-// export class ImageGalleryItem extends Component() {
-//   state = {
-//     isModalOpen: false,
-//   }
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+  },
+};
 
-//   openModal = () => this.setState({ isModalOpen: true });
-//   closeModal = () => this.setState({ isModalOpen: false })
+Modal.setAppElement('#root');
 
-//   render() {
+export class ImageGalleryItem extends Component {
+  state = {
+    isModalOpen: false,
+  };
 
-    
-//   return (
-//     <StyledImageGalleryItem onClick={this.openModal}>
-//       <a href={this.props.image.largeImageURL}>
-        
-//       </a>
-//       {/* <Modal largeImageURL={largeImageURL}
-//             alt={tags}
-//             onCloseModal={this.closeModal}/> */}
-//     </StyledImageGalleryItem>
-//   );
-// };
-// }
+  openModal = () => this.setState({ isModalOpen: true });
+  closeModal = () => this.setState({ isModalOpen: false });
+
+  render() {
+    const { webformatURL, tags, largeImageURL } = this.props.image;
+    return (
+      <>
+        <StyledImageGalleryItem>
+          <img src={webformatURL} alt={tags} onClick={this.openModal}/>
+          <Modal
+            isOpen={this.state.isModalOpen}
+            onRequestClose={this.closeModal}
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <img src={largeImageURL}/>
+          </Modal>
+        </StyledImageGalleryItem>
+      </>
+    );
+  }
+}

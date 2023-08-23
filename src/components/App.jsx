@@ -16,8 +16,8 @@ export class App extends Component {
 
   handleChangeQuery = newQuery => {
     this.setState({
-      // query: `${Date.now()}/${newQuery}`,
-      query: newQuery,
+      query: `${Date.now()}/${newQuery}`,
+      // query: newQuery,
       images: [],
       page: 1,
     });
@@ -36,8 +36,8 @@ export class App extends Component {
         this.setState({ loading: true });
 
         const data = await fetchImages(
-          // this.state.query.slice(this.state.query.indexOf('/') + 1),
-          this.state.query,
+          this.state.query.slice(this.state.query.indexOf('/') + 1),
+          // this.state.query,
           this.state.page
         );
 
@@ -72,7 +72,7 @@ export class App extends Component {
         
          {this.state.images && <ImageGallery images={this.state.images} />} 
        
-        <ButtonLoadMore onClick={this.handleLoadMore} />
+         <ButtonLoadMore onClick={this.handleLoadMore} />
       </>
     );
   }

@@ -4,16 +4,13 @@ import { StyledImageGallery } from './ImageGallery.styled';
 export const ImageGallery = (props) => {
 // const {id} = props.images.hits;
 
-  console.log(props.images.hits)
-  // props.images.hits.map(item => console.log(item.id))
+  // console.log(props.images)
+  // props.images.map(item => console.log(item.id))
   return (
-    <>
-    
-    </>
-    // <StyledImageGallery>
-    //   {images.map(image => (
-    //     <ImageGalleryItem image={image} key={image.id} />
-    //   ))}
-    // </StyledImageGallery>
+    <StyledImageGallery>
+       {props.images.map(image => (
+         <ImageGalleryItem image={image} key={image.id} />
+       ))}
+    </StyledImageGallery>
   );
 };
