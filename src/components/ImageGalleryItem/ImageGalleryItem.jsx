@@ -33,9 +33,8 @@ export class ImageGalleryItem extends Component {
             isOpen={this.state.isModalOpen}
             onRequestClose={this.closeModal}
             style={customStyles}
-            contentLabel="Example Modal"
           >
-            <img src={largeImageURL}/>
+            <img src={largeImageURL} alt={tags}/>
           </Modal>
         </StyledImageGalleryItem>
       </>
