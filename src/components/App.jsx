@@ -12,6 +12,7 @@ export class App extends Component {
     images: [],
     page: 1,
     loading: false,
+    error: null,
   };
 
   handleChangeQuery = newQuery => {
@@ -23,29 +24,25 @@ export class App extends Component {
   };
 
   async componentDidUpdate(prevProps, prevState) {
-      try {
-      if (
-        prevState.query !== this.state.query ||
-        prevState.page !== this.state.page 
-      ) {
-
+    try {
+      const { query, page } = this.state;
+      if (prevState.query !== query || prevState.page !== page) {
         this.setState({ loading: true });
 
         const data = await fetchImages(
-          this.state.query.slice(this.state.query.indexOf('/') + 1),
-          this.state.page
+          query.slice(query.indexOf('/') + 1),
+          page
         );
 
-        this.setState({
-          images: data,
-          loading: false,
+        this.setState(prevState => {
+          return {
+            images: [...prevState.images, ...data],
+            loading: false,
+          };
         });
       }
     } catch (error) {
-      console.log(error.message);
-    }
-    finally {
-      // () => this.setState({ loading: false });
+      this.setState({ error });
     }
   }
 
@@ -56,16 +53,17 @@ export class App extends Component {
   };
 
   render() {
-
+    const { error, images, loading } = this.state;
     return (
-      <>  
-      <GlobalStyle />
+      <>
+        <GlobalStyle />
         <Searchbar onSubmit={this.handleChangeQuery} />
-        {this.state.loading && <Loader/>} 
-        
-         {this.state.images && <ImageGallery images={this.state.images} />} 
-       
-         {!this.state.images && <ButtonLoadMore onClick={this.handleLoadMore} />}
+        {error && <p>Ooops, somthing wrong: {error.message}. Reload page.</p>}
+        {images.length > 0 && <ImageGallery images={images} />}
+        {loading && <Loader />}
+        {images.length > 0 && !loading && (
+          <ButtonLoadMore onClick={this.handleLoadMore} />
+        )}
       </>
     );
   }
